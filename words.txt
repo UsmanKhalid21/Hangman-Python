@@ -1,0 +1,7 @@
+cricket
+football
+hockey
+carrom
+ludo
+uno
+
