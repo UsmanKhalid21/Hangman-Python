@@ -1,7 +1,6 @@
-cricket: 0
+cricket: 1
 football: 0
 hockey: 0
-carrom: 0
-ludo: 1
+carrom: 1
+ludo: 0
 uno: 0
-: 0

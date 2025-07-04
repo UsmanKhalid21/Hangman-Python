@@ -1,1 +1,21 @@
-Usman - Lost - word: football
+Hamza - Won - word: cricket
+
+Adil - Won - word: cricket
+
+khalid - Won - word: uno
+
+Taha - Won - word: football
+
+Usman - Won - word: hockey
+
+Usman - Won - word: uno
+
+Hamid - Won - word: ludo
+
+Usman - Won - word: cricket
+
+Hamza - Won - word: cricket
+
+Hamid - Won - word: carrom
+
+Usman - Won - word: carrom

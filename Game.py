@@ -23,13 +23,12 @@ def load_file():
         random_word = random.choice(word)
         return random_word
 
-def update_word_count(random_word):
-    global dict
-    if random_word in dict:
-        dict[random_word] += 1
+def update_word_count(word):
+    if word in dict:
+        dict[word] += 1
     with open('word_count.txt', 'w') as file:
-        for word, count in dict.items():
-            file.write(f"{word}: {count}\n")
+        for word_count, count in dict.items():
+            file.write(f"{word_count}: {count}\n")
 
 
 
@@ -37,6 +36,7 @@ def update_word_count(random_word):
 def select_word():
     get_word = load_file()
     return get_word
+
 
 
 def Player_name():
@@ -60,6 +60,7 @@ def game_control():
 
         user = Player_name()
 
+
         print(f"Welcome {user},Let's Start the Game")
         print("You Have 7 Guesses to fill the word")
         print("Let's Go.....")
@@ -68,10 +69,9 @@ def game_control():
 
         while not menu:
             menu = Menu()
-
+            
         word = select_word()
         update_word_count(word)
-
 
         # get word
         word = select_word()
@@ -83,11 +83,15 @@ def game_control():
         print(f"{dash}", end = "")
         print("\n")
 
-
+        guessing_letter = set()
 
 
         while no_of_Guesses > 0:
                 user_guess =  input("Enter your guess: ").strip().lower()
+                if user_guess in guessing_letter:
+                    print('You Already Guess this Letter Try Another One')
+                    continue
+                guessing_letter.add(user_guess)
                 if user_guess == "":
                     print("Please fill the field")
                 # 1 character at 1 time
@@ -101,12 +105,14 @@ def game_control():
                 for i in range(no_of_letters):
                     if word[i] == user_guess:
                         dash = dash[:i] + user_guess + dash[i+1:]
-                        print(dash, end = "")
+                        print(" ".join(dash))
+                        print("\n")
                 # if all guesses are = to word then you Won the game    
                 if dash == word:
                     print(f"{user} - Won - word: {word}")
                     with open('game_results.txt','a') as result_file:
-                        result_file.write(f"{user} - Won - word: {word}\n\n")
+                        result_file.write(f"{user} - Won - word: {word}\n")
+                        update_word_count(word)
                     break
                 # when wrong guess decrease 1 from guess
                 if user_guess not in word:
@@ -116,6 +122,9 @@ def game_control():
                     # when the guess equal to 0 then you lost the game
                 if no_of_Guesses == 0:
                     print(f"{user} - Lost - word: hangman")
+                    with open('game_results.txt','a') as result_file:
+                        result_file.write(f"{user} - Lost - word: {word}\n")
+                        update_word_count(word)
                 # create hangman with print
                     print( """
     +---+
@@ -127,11 +136,9 @@ def game_control():
     =========
     """)
                     
-        print("You have", no_of_Guesses, "guesses left")
+                    print("You have", no_of_Guesses, "guesses left")
 
-        print("The word was", word)
-        with open('game_results.txt','a') as result_file:
-                        result_file.write(f"{user} - Lost - word: {word}\n")
+                    print("The word was", word)
 
 
 game_control()
